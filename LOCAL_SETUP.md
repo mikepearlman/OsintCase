@@ -54,3 +54,6 @@ Run `python3 -m unittest discover -s bridge -p 'test_*.py' -v`.
 Run `npm run build`.
 The production dependency audit currently reports zero known vulnerabilities.
 Upstream development dependencies still have audit findings.
+
+The original app targets desktop use. Its narrow phone layout still clips some controls.
+No new paid provider request ran during setup. The bridge uses the previously working provider service.

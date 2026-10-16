@@ -1,3 +1,8 @@
+# Installed phone evidence bridge
+
+Open http://127.0.0.1:8770 or double-click `start-local.command`.
+Read [LOCAL_SETUP.md](LOCAL_SETUP.md) for archive search, mapping, playback, and Jev/Nova-3 processing.
+
 # OSINTCase
 
 <p align="center">
