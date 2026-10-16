@@ -1,3 +1,4 @@
+import PhoneArchive from './PhoneArchive.jsx';
 import { useEffect, useState } from 'react';
 import { useProject } from '../context/ProjectContext.jsx';
 import { NavigationProvider, useNavigation } from '../context/NavigationContext.jsx';
@@ -26,6 +27,7 @@ import ReportView from './ReportView.jsx';
 import './ProjectView.css';
 
 const TABS = [
+  { key: 'phone', label: 'Phone archive' },
   { key: 'info', label: 'Ağ' },
   { key: 'map', label: 'Harita' },
   { key: 'timeline', label: 'Kronoloji' },
@@ -79,6 +81,7 @@ function ProjectViewInner() {
 
   const counts = {
     info: project.identifiers?.length ?? 0,
+    phone: null,
     map: project.locations?.length ?? 0,
     timeline: project.events?.length ?? 0,
     evidence: project.evidence?.length ?? 0,
@@ -208,6 +211,7 @@ function ProjectViewInner() {
           </header>
 
           <main className="project-main">
+            {tab === 'phone' && <div className="tab-pane" role="tabpanel"><PhoneArchive /></div>}
             {/* Ağ ve Harita sekmeleri açık kalır (CSS ile gizlenir); böylece
                 harita görünümü ve grafik durumu sekme değiştirince kaybolmaz. */}
             <div className="tab-pane" role="tabpanel" aria-hidden={tab !== 'info'} hidden={tab !== 'info'}>

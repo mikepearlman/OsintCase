@@ -89,3 +89,7 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 $RECYCLE.BIN/
+
+# Local Python bridge caches
+__pycache__/
+*.pyc

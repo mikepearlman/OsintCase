@@ -392,6 +392,7 @@ export default function IdentifierModal({ initial, onClose, onSubmit }) {
 
             <div className="form-scroll" ref={formScrollRef}>
               {error && <div className="form-error">{error}</div>}
+              {initial?.sourceRecordId && <p><a className="btn" href={`/source/${initial.sourceRecordId}`} target="_blank" rel="noreferrer">Open original record and audio</a></p>}
               {editing && ['acquaintance', 'family', 'name'].includes(typeKey) && (
                 <div className="promote-box">
                   <span>{t('Bu kişi dosyada önem kazandıysa tam Şahıs kaydına yükseltebilirsiniz. Bağlantılar, konumlar ve fotoğraflar korunur.')}</span>

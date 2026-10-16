@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { bridgeRequest } from './components/PhoneArchive.jsx';
 import { useProject } from './context/ProjectContext.jsx';
 import { useAppConfig } from './context/AppConfigContext.jsx';
 import Landing from './components/Landing.jsx';
@@ -5,7 +7,21 @@ import ProjectView from './components/ProjectView.jsx';
 import Welcome from './components/Welcome.jsx';
 
 export default function App() {
-  const { project } = useProject();
+  const { project, isEncrypted, openProjectFromSnapshot } = useProject();
+  const [bridgeError, setBridgeError] = useState('');
+  useEffect(() => {
+    if (project) return;
+    let live = true;
+    bridgeRequest('/bridge/saved').then(snapshot => {
+      if (live) openProjectFromSnapshot({ snapshot });
+    }).catch(e => { if (live) setBridgeError(e.message); });
+    return () => { live = false; };
+  }, []);
+  useEffect(() => {
+    if (project?.id !== 'phone-evidence' || isEncrypted) return;
+    const timer = setTimeout(() => bridgeRequest('/bridge/save', project).then(() => setBridgeError('')).catch(e => setBridgeError('Local save failed: ' + e.message)), 1200);
+    return () => clearTimeout(timer);
+  }, [project, isEncrypted]);
   const { loaded, mapProviderSource } = useAppConfig();
 
   // Wait until the config layer has tried to read localStorage + the config
@@ -22,5 +38,5 @@ export default function App() {
   const isFirstRun = mapProviderSource === null;
   if (isFirstRun) return <Welcome />;
 
-  return project ? <ProjectView /> : <Landing />;
+  return <>{bridgeError && <p role="alert" className="phone-start-error">{bridgeError}</p>}{project ? <ProjectView /> : <Landing />}</>;
 }

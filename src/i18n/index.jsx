@@ -28,7 +28,7 @@ function readLang() {
     const v = localStorage.getItem(STORAGE_KEY);
     if (v === 'tr' || v === 'en') return v;
   } catch {}
-  return 'tr';
+  return 'en';
 }
 
 let currentLang = readLang();
